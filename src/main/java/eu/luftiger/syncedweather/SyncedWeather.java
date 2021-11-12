@@ -28,15 +28,15 @@ public final class SyncedWeather extends JavaPlugin {
 		if(configService.getConfig().getString("API_KEY").isEmpty()){
 			logger.warning("the api key is missing!!");
 			logger.info("disabling plugin...");
-			getServer().getPluginManager().disablePlugin(this);
 			logger.info("------------[SyncedWeather]------------");
+			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 
-		logger.info("loading weatherservice...");
+		logger.info("loading weather-service...");
 		weatherService = new WeatherService(this);
 
-		logger.info("starting checkupservices...");
+		logger.info("starting checkup-services...");
 		if(configService.getConfig().getBoolean("SyncWeather")){
 			new CheckUpWeatherTask(this).start();
 		}
@@ -45,11 +45,6 @@ public final class SyncedWeather extends JavaPlugin {
 		}
 
 		logger.info("------------[SyncedWeather]------------");
-	}
-
-	@Override
-	public void onDisable() {
-		// Plugin shutdown logic
 	}
 
 	public WeatherService getWeatherService() {
