@@ -1,0 +1,15 @@
+#Here you have to enter your API key from https://openweathermap.org.
+API_KEY: ''
+
+#Here you have to enter the place with which the weather should be synchronized.
+#Example: Hamburg, DE
+Location: ''
+SyncWeather: true
+
+#Here you have to enter the time zone with which your worlds should be synchronized.
+TimeZone: 'Europe/Berlin'
+SyncTime: true
+
+#Here you have to enter the worlds that the plugin should influence.
+Worlds:
+  - "world"

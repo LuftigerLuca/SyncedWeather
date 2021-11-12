@@ -1,0 +1,6 @@
+name: SyncedWeather
+version: '${project.version}'
+main: eu.luftiger.syncedweather.SyncedWeather
+prefix: SyncedWeather
+authors: [ LuftigerLuca ]
+description: A Plugin, which allows you to synchronize your weather with a real location.
