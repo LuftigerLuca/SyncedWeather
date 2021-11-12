@@ -52,10 +52,6 @@ public final class SyncedWeather extends JavaPlugin {
 		// Plugin shutdown logic
 	}
 
-	public Logger getLogger() {
-		return logger;
-	}
-
 	public WeatherService getWeatherService() {
 		return weatherService;
 	}

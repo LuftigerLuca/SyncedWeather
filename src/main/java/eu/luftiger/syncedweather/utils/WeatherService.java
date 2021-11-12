@@ -20,12 +20,10 @@ public class WeatherService {
 
 	private final SyncedWeather plugin;
 	private final ConfigService configService;
-	private final Logger logger;
 
 	public WeatherService(SyncedWeather plugin) {
 		this.plugin = plugin;
 		this.configService = plugin.getConfigService();
-		this.logger = plugin.getLogger();
 	}
 
 	public static Map<String,Object> jsonToMap(String str){
@@ -51,7 +49,7 @@ public class WeatherService {
 			respMap = jsonToMap (result.toString());
 
 		}catch (IOException e){
-			logger.warning("There is an error with the request for the data:   " + e.getMessage());
+			Bukkit.getLogger().warning("[SyncedWeather] There is an error with the request for the data:   §4" + e.getMessage());
 		}
 		return respMap;
 	}
