@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SyncedWeatherCommand implements TabExecutor {
@@ -18,8 +19,13 @@ public class SyncedWeatherCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length >= 1){
-            switch (args[0]){
-                case "info" -> new InfoSubcommand(plugin).execute(sender, args);
+            switch (args[0].toLowerCase()){
+                case "info":
+                    new InfoSubcommand(plugin).execute(sender, args);
+                    break;
+                case "currentweather":
+                    new CurrentWeatherSubcommand(plugin).execute(sender, args);
+                    break;
             }
         }
         return false;
@@ -27,6 +33,12 @@ public class SyncedWeatherCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        if(args.length <= 1){
+            completions.add("info");
+            completions.add("currentWeather");
+        }
         return null;
     }
 }

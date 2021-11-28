@@ -1,14 +1,12 @@
 package eu.luftiger.syncedweather.scheduler;
 
 import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.utils.ConfigService;
 import eu.luftiger.syncedweather.utils.WeatherService;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class CheckUpWeatherTask {
 
@@ -25,8 +23,10 @@ public class CheckUpWeatherTask {
 
 			@Override
 			public void run() {
-				if(weatherService.getWeatherFromLocation() != null && weatherService.getWeatherFromLocation().get("weather") != null) {
-					String rawInfo = weatherService.getWeatherFromLocation().get("weather").toString()
+				if(weatherService.getWeatherFromApi() != null && weatherService.getWeatherFromApi().get("weather") != null) {
+					weatherService.getWeather().putAll(weatherService.getWeatherFromApi());
+
+					String rawInfo = weatherService.getWeather().get("weather").toString()
 							.replace("[", "")
 							.replace("]", "")
 							.replace("{", "")

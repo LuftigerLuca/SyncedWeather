@@ -13,3 +13,13 @@ SyncTime: true
 #Here you have to enter the worlds that the plugin should influence.
 Worlds:
   - "world"
+
+Messages:
+  InfoMap:
+    lines:
+      - "&8&m]&7&m------&8&m[&r &aWeather&r &8&m]&7&m------&8&m["
+      - "&bLocation&7» &f{location}"
+      - "&bWeather&7» &f{weather}"
+      - "&bTemperature&7» &f{temperature}"
+      - "&bWind&7» &f{wind}"
+      - "&8&m]&7&m------&8&m[&r &aWeather&r &8&m]&7&m------&8&m["

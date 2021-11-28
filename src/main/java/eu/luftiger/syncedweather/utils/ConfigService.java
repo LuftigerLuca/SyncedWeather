@@ -1,6 +1,7 @@
 package eu.luftiger.syncedweather.utils;
 
 import eu.luftiger.syncedweather.SyncedWeather;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -47,6 +48,10 @@ public class ConfigService {
 			}
 		}
 		config = YamlConfiguration.loadConfiguration(file);
+	}
+
+	public String getMessage(String path){
+		return ChatColor.translateAlternateColorCodes('&', config.getString(path));
 	}
 
 	public YamlConfiguration getConfig() {

@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -20,6 +22,7 @@ public class WeatherService {
 
 	private final SyncedWeather plugin;
 	private final ConfigService configService;
+	private final Map<String, Object> weather = new HashMap<>();
 
 	public WeatherService(SyncedWeather plugin) {
 		this.plugin = plugin;
@@ -30,7 +33,7 @@ public class WeatherService {
 		return new Gson().fromJson(str, new TypeToken<HashMap<String,Object>>() {}.getType());
 	}
 
-	public Map<String, Object> getWeatherFromLocation(){
+	public Map<String, Object> getWeatherFromApi(){
 		Map<String, Object > respMap = null;
 		String API_KEY = configService.getConfig().getString("API_KEY");
 		String LOCATION = configService.getConfig().getString("Location");
@@ -52,6 +55,27 @@ public class WeatherService {
 			Bukkit.getLogger().warning("[SyncedWeather] There is an error with the request for the data:   §4" + e.getMessage());
 		}
 		return respMap;
+	}
+
+	public Map<String, Object> getMap(String value){
+		return jsonToMap(value);
+	}
+
+	public String getWeatherName(){
+		String rawInfo = getWeather().get("weather").toString()
+				.replace("[", "")
+				.replace("]", "")
+				.replace("{", "")
+				.replace("}", "")
+				.replace(" ", "");
+
+		List<String> weather = new ArrayList<>();
+
+		for (String s : rawInfo.split(",")) {
+			weather.add(s.split("=")[1]);
+		}
+
+		return weather.get(1);
 	}
 
 	public void setMinecraftWeather(String weatherName){
@@ -86,5 +110,9 @@ public class WeatherService {
 				}
 			}
 		}
+	}
+
+	public Map<String, Object> getWeather() {
+		return weather;
 	}
 }

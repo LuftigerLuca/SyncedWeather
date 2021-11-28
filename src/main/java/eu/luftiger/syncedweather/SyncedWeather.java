@@ -1,5 +1,6 @@
 package eu.luftiger.syncedweather;
 
+import eu.luftiger.syncedweather.commands.SyncedWeatherCommand;
 import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
 import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
 import eu.luftiger.syncedweather.utils.ConfigService;
@@ -55,6 +56,9 @@ public final class SyncedWeather extends JavaPlugin {
 		if(configService.getConfig().getBoolean("SyncTime")) {
 			new CheckUpTimeTask(this).start();
 		}
+
+		logger.info(consolePrefix + " loading commands...");
+		getCommand("syncedweather").setExecutor(new SyncedWeatherCommand(this));
 
 	}
 

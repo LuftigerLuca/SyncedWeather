@@ -5,6 +5,6 @@ prefix: SyncedWeather
 authors: [ LuftigerLuca ]
 description: A Plugin, which allows you to synchronize your weather with a real location.
 commands:
-  syncedweaher:
+  syncedweather:
     usage: /syncedweather <argument>
     aliases: [sw, sweather]
