@@ -13,3 +13,31 @@ SyncTime: true
 #Here you have to enter the worlds that the plugin should influence.
 Worlds:
   - "world"
+
+Messages:
+  prefix: "&8[&aSyncedWeather&8]"
+  permission_error: "&cYou lack the permission to do this!"
+  lenght_error: "&cThis command does not exist, use &4/sw help&c!"
+  help:
+    - "&8&m]&7&m------&8&m[&r &aSyncedWeather - Help&r &8&m]&7&m------&8&m["
+    - "&b/sw help&7» &fshows you this message"
+    - "&b/sw info&7» &fshwos you a short info about this plugin"
+    - "&b/sw currentweather&7» &fshows you the current weather"
+    - "&8&m]&7&m------&8&m[&r &aSyncedWeather - Help&r &8&m]&7&m------&8&m["
+
+  info_map:
+    unknown: "&8unknown"
+    weathernames:
+      thundersorm: "Thunderstorm"
+      clouds: "Cloudy"
+      drizzle: "Drizzle"
+      rain: "Rain"
+      snow: "Snow"
+      clear: "Clear"
+    lines:
+      - "&8&m]&7&m------&8&m[&r &aWeather&r &8&m]&7&m------&8&m["
+      - "&bLocation&7» &f{location}"
+      - "&bWeather&7» &f{weather}"
+      - "&bTemperature&7» &f{temperature}"
+      - "&bWind&7» &f{wind}"
+      - "&8&m]&7&m------&8&m[&r &aWeather&r &8&m]&7&m------&8&m["
