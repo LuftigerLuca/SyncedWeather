@@ -6,5 +6,4 @@ authors: [ LuftigerLuca ]
 description: A Plugin, which allows you to synchronize your weather with a real location.
 commands:
   syncedweather:
-    usage: /syncedweather <argument>
     aliases: [sw, sweather]

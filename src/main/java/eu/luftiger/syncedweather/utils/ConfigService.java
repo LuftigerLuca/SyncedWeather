@@ -50,7 +50,8 @@ public class ConfigService {
 		config = YamlConfiguration.loadConfiguration(file);
 	}
 
-	public String getMessage(String path){
+	public String getMessage(String path, boolean withPrefix){
+		if(withPrefix) return ChatColor.translateAlternateColorCodes('&', config.getString("Messages.prefix") + " " + config.getString(path));
 		return ChatColor.translateAlternateColorCodes('&', config.getString(path));
 	}
 

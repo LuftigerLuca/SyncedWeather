@@ -26,19 +26,37 @@ public class SyncedWeatherCommand implements TabExecutor {
                 case "currentweather":
                     new CurrentWeatherSubcommand(plugin).execute(sender, args);
                     break;
+                case "help":
+                    new HelpSubcommand(plugin).execute(sender, args);
             }
+        }else {
+            sender.sendMessage(plugin.getConfigService().getMessage("Messages.lenght_error", true));
         }
+
         return false;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> completions = new ArrayList<>();
+        List<String> finalCompletions = new ArrayList<>();
 
         if(args.length <= 1){
             completions.add("info");
             completions.add("currentWeather");
+            completions.add("help");
         }
-        return null;
+
+        if (!args[args.length - 1].equals("")) {
+            for (String completion : completions) {
+                if (completion.toLowerCase().startsWith(args[args.length - 1].toLowerCase())) {
+                    finalCompletions.add(completion);
+                }
+            }
+        } else {
+            finalCompletions.addAll(completions);
+        }
+
+        return finalCompletions;
     }
 }

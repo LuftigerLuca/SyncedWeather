@@ -1,12 +1,16 @@
 package eu.luftiger.syncedweather;
 
 import eu.luftiger.syncedweather.commands.SyncedWeatherCommand;
+import eu.luftiger.syncedweather.listeners.PlayerJoinListener;
+import eu.luftiger.syncedweather.model.Weather;
 import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
 import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
 import eu.luftiger.syncedweather.utils.ConfigService;
+import eu.luftiger.syncedweather.utils.UpdateCheckService;
 import eu.luftiger.syncedweather.utils.WeatherService;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -18,7 +22,7 @@ public final class SyncedWeather extends JavaPlugin {
 	private ConfigService configService;
 
 	private String consolePrefix;
-	private String consoleLogo =
+	private final String consoleLogo =
 			"\n   _____                          ___          __        _   _                \n" +
 			"  / ____|                        | \\ \\        / /       | | | |               \n" +
 			" | (___  _   _ _ __   ___ ___  __| |\\ \\  /\\  / /__  __ _| |_| |__   ___ _ __  \n" +
@@ -27,6 +31,8 @@ public final class SyncedWeather extends JavaPlugin {
 			" |_____/ \\__, |_| |_|\\___\\___|\\__,_|   \\/  \\/ \\___|\\__,_|\\__|_| |_|\\___|_|    \n" +
 			"          __/ |                                                               \n" +
 			"         |___/";
+
+	private boolean isNewerVersion;
 
 	@Override
 	public void onEnable() {
@@ -46,8 +52,8 @@ public final class SyncedWeather extends JavaPlugin {
 			return;
 		}
 
-		logger.info(consolePrefix + " loading weather-service...");
-		weatherService = new WeatherService(this);
+		logger.info(consolePrefix + " loading weatherservice...");
+		this.weatherService = new WeatherService(this);
 
 		logger.info(consolePrefix + " starting checkup-services...");
 		if(configService.getConfig().getBoolean("SyncWeather")){
@@ -60,6 +66,19 @@ public final class SyncedWeather extends JavaPlugin {
 		logger.info(consolePrefix + " loading commands...");
 		getCommand("syncedweather").setExecutor(new SyncedWeatherCommand(this));
 
+		logger.info(consolePrefix + " registering listeners...");
+		PluginManager pluginManager = Bukkit.getPluginManager();
+		pluginManager.registerEvents(new PlayerJoinListener(this), this);
+
+		logger.info(consolePrefix + " checking for updates...");
+		new UpdateCheckService(this, 97574).getVersion(version -> {
+			if(!this.getDescription().getVersion().equals(version)){
+				isNewerVersion = true;
+				logger.info(consolePrefix + " there is a new version of this plugin: https://www.spigotmc.org/resources/syncedweather.97574/");
+			}
+		});
+
+
 	}
 
 	public WeatherService getWeatherService() {
@@ -68,5 +87,13 @@ public final class SyncedWeather extends JavaPlugin {
 
 	public ConfigService getConfigService() {
 		return configService;
+	}
+
+	public String getConsolePrefix() {
+		return consolePrefix;
+	}
+
+	public boolean isNewerVersion() {
+		return isNewerVersion;
 	}
 }

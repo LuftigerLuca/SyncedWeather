@@ -29,7 +29,7 @@ public class InfoSubcommand {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
-            TextComponent clickComponent = new TextComponent("§8[§aclick§8]");
+            TextComponent clickComponent = new TextComponent("§8[§6Spigot§8]");
             clickComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§fclick to go to the spigot page")));
             clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/syncedweather.97574/"));
 
