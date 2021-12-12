@@ -4,7 +4,6 @@ Docs: https://www.spigotmc.org/resources/syncedweather.97574/
 ## Functions:
 - synchronize the weather of your worlds(s) with a real location
 - synchronize the time of your world(s) with a real timezone
-
 - everything can be configured in the config.yml
 
 
