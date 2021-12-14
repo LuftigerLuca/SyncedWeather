@@ -4,6 +4,7 @@ import eu.luftiger.syncedweather.SyncedWeather;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class SyncedWeatherCommand implements TabExecutor {
                 case "currentweather":
                     new CurrentWeatherSubcommand(plugin).execute(sender, args);
                     break;
+                case "reload":
+                    new ReloadSubcommand(plugin).execute(sender, args);
+                    break;
                 case "help":
                     new HelpSubcommand(plugin).execute(sender, args);
             }
@@ -45,6 +49,12 @@ public class SyncedWeatherCommand implements TabExecutor {
             completions.add("info");
             completions.add("currentWeather");
             completions.add("help");
+
+            if(sender instanceof Player){
+                Player player = (Player) sender;
+
+                if(player.hasPermission("syncedweather.reload")) completions.add("reload");
+            }
         }
 
         if (!args[args.length - 1].equals("")) {

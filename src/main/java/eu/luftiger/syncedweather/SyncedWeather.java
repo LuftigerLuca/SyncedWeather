@@ -6,6 +6,7 @@ import eu.luftiger.syncedweather.model.Weather;
 import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
 import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
 import eu.luftiger.syncedweather.utils.ConfigService;
+import eu.luftiger.syncedweather.utils.Placeholder;
 import eu.luftiger.syncedweather.utils.UpdateCheckService;
 import eu.luftiger.syncedweather.utils.WeatherService;
 import org.bukkit.Bukkit;
@@ -79,6 +80,24 @@ public final class SyncedWeather extends JavaPlugin {
 		});
 
 
+		if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null){
+			logger.info(consolePrefix + " loading placeholders...");
+			new Placeholder(this).register();
+		}
+	}
+
+	public void reload(){
+		logger.info(consolePrefix + " loading the config...");
+		configService.createDefaults();
+
+		if(configService.getConfig().getString("API_KEY").isEmpty()){
+			logger.warning(consolePrefix + " the api key is missing!!");
+			logger.info(consolePrefix + " disabling plugin...");
+			getServer().getPluginManager().disablePlugin(this);
+		}
+
+		logger.info(consolePrefix + " loading the weather...");
+		weatherService.getWeather().update();
 	}
 
 	public WeatherService getWeatherService() {
