@@ -19,7 +19,7 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         if(player.hasPermission("syncedweather.updateinfo") || player.isOp()){
             if(plugin.isNewerVersion()){
-                player.sendMessage(plugin.getConfigService().getMessage("Messages.Prefix", false) + "&fThere is a new version of this plugin: https://www.spigotmc.org/resources/syncedweather.97574/ !");
+                player.sendMessage(plugin.getConfigService().getMessage("Messages.prefix", false) + "§fThere is a new version of this plugin: https://www.spigotmc.org/resources/syncedweather.97574/ !");
             }
         }
     }

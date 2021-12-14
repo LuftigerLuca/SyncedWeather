@@ -58,6 +58,7 @@ public class Weather {
         }
 
         this.locationName = respMap.get("name").toString() + ", " + jsonToMap(respMap.get("sys").toString()).get("country").toString();
+
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
         this.tempF = round(Double.parseDouble(jsonToMap(respMap.get("main").toString()).get("temp").toString()), 2);

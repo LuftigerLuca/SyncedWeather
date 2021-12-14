@@ -16,8 +16,12 @@ Worlds:
 
 Messages:
   prefix: "&8[&aSyncedWeather&8]"
+
   permission_error: "&cYou lack the permission to do this!"
   lenght_error: "&cThis command does not exist, use &4/sw help&c!"
+  reload_plugin: "&fThe plugin will be reloaded."
+  reloaded_plugin: "&fThe plugin has been reloaded."
+
   help:
     - "&8&m]&7&m------&8&m[&r &aSyncedWeather - Help&r &8&m]&7&m------&8&m["
     - "&b/sw help&7» &fshows you this message"
