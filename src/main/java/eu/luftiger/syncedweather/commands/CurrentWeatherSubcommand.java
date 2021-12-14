@@ -33,6 +33,7 @@ public class CurrentWeatherSubcommand {
         String temp = weather.getTempC() + "°C §8/§r " + weather.getTempF() + "°F";
         String wind;
 
+        System.out.println(weather.getWeatherName());
         if (weather.getWeatherName() != null) weatherName = configService.getMessage("Messages.info_map.weathernames." + weather.getWeatherName().toLowerCase(), false);
         if (weather.getLocationName() != null) locationName = weather.getLocationName();
 
