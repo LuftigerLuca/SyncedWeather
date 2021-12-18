@@ -9,6 +9,7 @@ import eu.luftiger.syncedweather.utils.ConfigService;
 import eu.luftiger.syncedweather.utils.Placeholder;
 import eu.luftiger.syncedweather.utils.UpdateCheckService;
 import eu.luftiger.syncedweather.utils.WeatherService;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
@@ -72,6 +73,7 @@ public final class SyncedWeather extends JavaPlugin {
 		pluginManager.registerEvents(new PlayerJoinListener(this), this);
 
 		logger.info(consolePrefix + " checking for updates...");
+
 		new UpdateCheckService(this, 97574).getVersion(version -> {
 			if(!this.getDescription().getVersion().equals(version)){
 				isNewerVersion = true;
@@ -84,6 +86,8 @@ public final class SyncedWeather extends JavaPlugin {
 			logger.info(consolePrefix + " loading placeholders...");
 			new Placeholder(this).register();
 		}
+
+		Metrics metrics = new Metrics(this, 	13631);
 	}
 
 	public void reload(){
