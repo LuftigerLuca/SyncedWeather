@@ -1,10 +1,6 @@
 package eu.luftiger.syncedweather.plugin.commands;
 
 import eu.luftiger.syncedweather.plugin.SyncedWeather;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,11 +25,15 @@ public class InfoSubcommand {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
+            //TODO: Lösung für TexComponent-Problem finden
+
+            /*
             TextComponent clickComponent = new TextComponent("§8[§6Spigot§8]");
             clickComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§fclick to go to the spigot page")));
             clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/syncedweather.97574/"));
+            */
 
-            player.spigot().sendMessage(clickComponent);
+            //player.spigot().sendMessage(clickComponent);
         }else {
             sender.sendMessage("https://www.spigotmc.org/resources/syncedweather.97574/");
         }

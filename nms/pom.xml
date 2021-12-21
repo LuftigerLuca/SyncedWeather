@@ -13,6 +13,12 @@
     <name>SyncedWeather NMS</name>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>common</module>
+        <module>v1_13_r1</module>
+        <module>v1_16_r3</module>
+    </modules>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -24,5 +30,4 @@
             <url>https://repo.codemc.org/repository/nms/</url>
         </repository>
     </repositories>
-
 </project>

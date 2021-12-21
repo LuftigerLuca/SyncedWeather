@@ -6,15 +6,19 @@ import eu.luftiger.syncedweather.plugin.utils.ConfigService;
 import eu.luftiger.syncedweather.plugin.utils.WeatherService;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
+import javax.swing.*;
 import java.util.List;
 
 public class CurrentWeatherSubcommand {
 
+    private final SyncedWeather plugin;
     private final ConfigService configService;
     private final WeatherService weatherService;
 
     public CurrentWeatherSubcommand(SyncedWeather plugin){
+        this.plugin = plugin;
         this.configService = plugin.getConfigService();
         this.weatherService = plugin.getWeatherService();
     }
@@ -52,5 +56,8 @@ public class CurrentWeatherSubcommand {
                     .replace("{weather}", weatherName)
                     .replace("{wind}", wind));
         }
+
+        plugin.getVersionWrapper().sendSnow((Player) sender);
+
     }
 }

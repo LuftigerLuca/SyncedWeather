@@ -1,5 +1,7 @@
 package eu.luftiger.syncedweather.plugin;
 
+import eu.luftiger.syncedweather.plugin.utils.VersionMatcher;
+import eu.luftiger.syncedweather.nms.common.VersionWrapper;
 import eu.luftiger.syncedweather.plugin.commands.SyncedWeatherCommand;
 import eu.luftiger.syncedweather.plugin.listeners.PlayerJoinListener;
 import eu.luftiger.syncedweather.plugin.scheduler.CheckUpTimeTask;
@@ -20,6 +22,7 @@ public final class SyncedWeather extends JavaPlugin {
 	private final Logger logger = Bukkit.getLogger();
 	private WeatherService weatherService;
 	private ConfigService configService;
+	private VersionWrapper versionWrapper;
 
 	private String consolePrefix;
 	private final String consoleLogo =
@@ -70,6 +73,10 @@ public final class SyncedWeather extends JavaPlugin {
 		PluginManager pluginManager = Bukkit.getPluginManager();
 		pluginManager.registerEvents(new PlayerJoinListener(this), this);
 
+		logger.info(consolePrefix + " loading nms...");
+		VersionMatcher versionMatcher = new VersionMatcher();
+		versionWrapper = versionMatcher.match();
+
 		logger.info(consolePrefix + " checking for updates...");
 
 		new UpdateCheckService(this, 97574).getVersion(version -> {
@@ -108,6 +115,10 @@ public final class SyncedWeather extends JavaPlugin {
 
 	public ConfigService getConfigService() {
 		return configService;
+	}
+
+	public VersionWrapper getVersionWrapper() {
+		return versionWrapper;
 	}
 
 	public String getConsolePrefix() {
