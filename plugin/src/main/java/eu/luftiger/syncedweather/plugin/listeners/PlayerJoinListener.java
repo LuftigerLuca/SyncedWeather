@@ -1,6 +1,6 @@
-package eu.luftiger.syncedweather.listeners;
+package eu.luftiger.syncedweather.plugin.listeners;
 
-import eu.luftiger.syncedweather.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

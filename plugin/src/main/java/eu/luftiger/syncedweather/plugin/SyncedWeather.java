@@ -1,17 +1,15 @@
-package eu.luftiger.syncedweather;
+package eu.luftiger.syncedweather.plugin;
 
-import eu.luftiger.syncedweather.commands.SyncedWeatherCommand;
-import eu.luftiger.syncedweather.listeners.PlayerJoinListener;
-import eu.luftiger.syncedweather.model.Weather;
-import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
-import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
-import eu.luftiger.syncedweather.utils.ConfigService;
-import eu.luftiger.syncedweather.utils.Placeholder;
-import eu.luftiger.syncedweather.utils.UpdateCheckService;
-import eu.luftiger.syncedweather.utils.WeatherService;
+import eu.luftiger.syncedweather.plugin.commands.SyncedWeatherCommand;
+import eu.luftiger.syncedweather.plugin.listeners.PlayerJoinListener;
+import eu.luftiger.syncedweather.plugin.scheduler.CheckUpTimeTask;
+import eu.luftiger.syncedweather.plugin.scheduler.CheckUpWeatherTask;
+import eu.luftiger.syncedweather.plugin.utils.ConfigService;
+import eu.luftiger.syncedweather.plugin.utils.Placeholder;
+import eu.luftiger.syncedweather.plugin.utils.UpdateCheckService;
+import eu.luftiger.syncedweather.plugin.utils.WeatherService;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

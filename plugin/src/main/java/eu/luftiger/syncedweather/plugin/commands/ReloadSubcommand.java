@@ -1,7 +1,7 @@
-package eu.luftiger.syncedweather.commands;
+package eu.luftiger.syncedweather.plugin.commands;
 
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.utils.ConfigService;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.utils.ConfigService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

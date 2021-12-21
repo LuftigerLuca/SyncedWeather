@@ -1,9 +1,9 @@
-package eu.luftiger.syncedweather.model;
+package eu.luftiger.syncedweather.plugin.model;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.utils.ConfigService;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.utils.ConfigService;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;

@@ -1,16 +1,13 @@
-package eu.luftiger.syncedweather.commands;
+package eu.luftiger.syncedweather.plugin.commands;
 
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.model.Weather;
-import eu.luftiger.syncedweather.utils.ConfigService;
-import eu.luftiger.syncedweather.utils.WeatherService;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.model.Weather;
+import eu.luftiger.syncedweather.plugin.utils.ConfigService;
+import eu.luftiger.syncedweather.plugin.utils.WeatherService;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class CurrentWeatherSubcommand {
 

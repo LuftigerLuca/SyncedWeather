@@ -1,6 +1,6 @@
-package eu.luftiger.syncedweather.commands;
+package eu.luftiger.syncedweather.plugin.commands;
 
-import eu.luftiger.syncedweather.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

@@ -1,8 +1,7 @@
-package eu.luftiger.syncedweather.scheduler;
+package eu.luftiger.syncedweather.plugin.scheduler;
 
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.utils.ConfigService;
-import eu.luftiger.syncedweather.utils.WeatherService;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.utils.ConfigService;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -11,7 +10,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 public class CheckUpTimeTask {
-
 	private final SyncedWeather plugin;
 	private final ConfigService configService;
 

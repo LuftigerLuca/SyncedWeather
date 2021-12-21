@@ -1,6 +1,6 @@
-package eu.luftiger.syncedweather.commands;
+package eu.luftiger.syncedweather.plugin.commands;
 
-import eu.luftiger.syncedweather.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;

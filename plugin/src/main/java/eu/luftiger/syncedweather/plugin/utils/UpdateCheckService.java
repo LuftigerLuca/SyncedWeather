@@ -1,6 +1,6 @@
-package eu.luftiger.syncedweather.utils;
+package eu.luftiger.syncedweather.plugin.utils;
 
-import eu.luftiger.syncedweather.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;

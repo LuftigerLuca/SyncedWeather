@@ -1,6 +1,6 @@
 name: SyncedWeather
 version: '${project.version}'
-main: eu.luftiger.syncedweather.SyncedWeather
+main: eu.luftiger.syncedweather.plugin.SyncedWeather
 prefix: SyncedWeather
 authors: [ LuftigerLuca ]
 softdepend: [PlaceholderAPI]

@@ -1,4 +1,4 @@
-package eu.luftiger.syncedweather.utils;
+package eu.luftiger.syncedweather.plugin.utils;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

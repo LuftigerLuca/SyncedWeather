@@ -1,9 +1,8 @@
-package eu.luftiger.syncedweather.utils;
+package eu.luftiger.syncedweather.plugin.utils;
 
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.model.Weather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.model.Weather;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +28,7 @@ public class Placeholder extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "syncedweather";
+        return "eu/luftiger/syncedweather/plugin";
     }
 
     @Override

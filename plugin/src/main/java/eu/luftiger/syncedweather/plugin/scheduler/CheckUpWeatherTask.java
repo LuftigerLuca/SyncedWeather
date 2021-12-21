@@ -1,12 +1,8 @@
-package eu.luftiger.syncedweather.scheduler;
+package eu.luftiger.syncedweather.plugin.scheduler;
 
-import eu.luftiger.syncedweather.SyncedWeather;
-import eu.luftiger.syncedweather.utils.WeatherService;
-import org.bukkit.Bukkit;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.utils.WeatherService;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CheckUpWeatherTask {
 

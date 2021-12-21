@@ -1,6 +1,6 @@
-package eu.luftiger.syncedweather.utils;
+package eu.luftiger.syncedweather.plugin.utils;
 
-import eu.luftiger.syncedweather.SyncedWeather;
+import eu.luftiger.syncedweather.plugin.SyncedWeather;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class ConfigService {
+public class ConfigService{
 
 	private final SyncedWeather plugin;
 	private YamlConfiguration config;
