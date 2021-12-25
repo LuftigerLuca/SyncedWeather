@@ -60,8 +60,8 @@ public final class SyncedWeather extends JavaPlugin {
 		this.weatherService = new WeatherService(this);
 
 		logger.info(consolePrefix + " starting checkup-services...");
-		checkUpWeatherTask = new CheckUpWeatherTask(this);
 
+		checkUpWeatherTask = new CheckUpWeatherTask(this);
 		if(configService.getConfig().getBoolean("SyncWeather")){
 			checkUpWeatherTask.start();
 		}
@@ -114,11 +114,9 @@ public final class SyncedWeather extends JavaPlugin {
 			checkUpWeatherTask.start();
 		}else checkUpWeatherTask.stop();
 
-		if(configService.getConfig().getBoolean("SyncTime")) {
+		if(configService.getConfig().getBoolean("SyncTime")){
 			checkUpTimeTask.start();
-		}else checkUpWeatherTask.stop();
-
-
+		}else checkUpTimeTask.stop();
 	}
 
 	public WeatherService getWeatherService() {
