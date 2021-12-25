@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -14,6 +15,7 @@ public class CheckUpTimeTask {
 
 	private final SyncedWeather plugin;
 	private final ConfigService configService;
+	private BukkitTask runnable;
 
 	public CheckUpTimeTask(SyncedWeather plugin) {
 		this.plugin = plugin;
@@ -22,7 +24,7 @@ public class CheckUpTimeTask {
 
 	public void start(){
 		DateTimeZone timeZone = DateTimeZone.forID(configService.getConfig().getString("TimeZone"));
-		new BukkitRunnable() {
+		runnable = new BukkitRunnable() {
 			@Override
 			public void run() {
 				DateTime dateTime = new DateTime(timeZone);
@@ -36,5 +38,11 @@ public class CheckUpTimeTask {
 				}
 			}
 		}.runTaskTimer(plugin, 0, 20L * 30);
+	}
+
+	public void stop(){
+		if(runnable != null){
+			runnable.cancel();
+		}
 	}
 }

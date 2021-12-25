@@ -4,6 +4,7 @@ import eu.luftiger.syncedweather.SyncedWeather;
 import eu.luftiger.syncedweather.utils.WeatherService;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class CheckUpWeatherTask {
 
 	private final SyncedWeather plugin;
 	private final WeatherService weatherService;
+	private BukkitTask runnable;
 
 	public CheckUpWeatherTask(SyncedWeather plugin) {
 		this.plugin = plugin;
@@ -19,7 +21,7 @@ public class CheckUpWeatherTask {
 	}
 
 	public void start() {
-		new BukkitRunnable() {
+		runnable = new BukkitRunnable() {
 
 			@Override
 			public void run() {
@@ -29,5 +31,11 @@ public class CheckUpWeatherTask {
 				}
 			}
 		}.runTaskTimer(plugin, 0,20L*60);
+	}
+
+	public void stop(){
+		if(runnable != null){
+			runnable.cancel();
+		}
 	}
 }

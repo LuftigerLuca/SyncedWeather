@@ -22,6 +22,8 @@ public final class SyncedWeather extends JavaPlugin {
 	private final Logger logger = Bukkit.getLogger();
 	private WeatherService weatherService;
 	private ConfigService configService;
+	private CheckUpTimeTask checkUpTimeTask;
+	private CheckUpWeatherTask checkUpWeatherTask;
 
 	private String consolePrefix;
 	private final String consoleLogo =
@@ -58,11 +60,15 @@ public final class SyncedWeather extends JavaPlugin {
 		this.weatherService = new WeatherService(this);
 
 		logger.info(consolePrefix + " starting checkup-services...");
+		checkUpWeatherTask = new CheckUpWeatherTask(this);
+
 		if(configService.getConfig().getBoolean("SyncWeather")){
-			new CheckUpWeatherTask(this).start();
+			checkUpWeatherTask.start();
 		}
+
+		checkUpTimeTask = new CheckUpTimeTask(this);
 		if(configService.getConfig().getBoolean("SyncTime")) {
-			new CheckUpTimeTask(this).start();
+			checkUpTimeTask.start();
 		}
 
 		logger.info(consolePrefix + " loading commands...");
@@ -102,6 +108,17 @@ public final class SyncedWeather extends JavaPlugin {
 
 		logger.info(consolePrefix + " loading the weather...");
 		weatherService.getWeather().update();
+
+		logger.info(consolePrefix + " loading checkup-services...");
+		if(configService.getConfig().getBoolean("SyncWeather")){
+			checkUpWeatherTask.start();
+		}else checkUpWeatherTask.stop();
+
+		if(configService.getConfig().getBoolean("SyncTime")) {
+			checkUpTimeTask.start();
+		}else checkUpWeatherTask.stop();
+
+
 	}
 
 	public WeatherService getWeatherService() {
