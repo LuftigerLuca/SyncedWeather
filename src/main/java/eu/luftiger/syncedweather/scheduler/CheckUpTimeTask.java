@@ -31,13 +31,20 @@ public class CheckUpTimeTask {
 				for(String worldName : configService.getConfig().getStringList("Worlds")){
 					World world = Bukkit.getWorld(worldName);
 					if(world != null){
-						world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+
 						double time = ((dateTime.getHourOfDay()*1000)-6000)+(dateTime.getMinuteOfHour()*16.6);
-						world.setTime((long) time);
+
+						Bukkit.getScheduler().runTask(plugin, new Runnable() {
+							@Override
+							public void run() {
+								world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+								world.setTime((long) time);
+							}
+						});
 					}
 				}
 			}
-		}.runTaskTimer(plugin, 0, 20L * 30);
+		}.runTaskTimerAsynchronously(plugin, 0, 20L * 30);
 	}
 
 	public void stop(){

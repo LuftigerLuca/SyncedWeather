@@ -27,10 +27,15 @@ public class CheckUpWeatherTask {
 			public void run() {
 				weatherService.getWeather().update();
 				if(weatherService.getWeather().getWeatherName() != null){
-					weatherService.setMinecraftWeather(weatherService.getWeather().getWeatherName());
+					Bukkit.getScheduler().runTask(plugin, new Runnable() {
+						@Override
+						public void run() {
+							weatherService.setMinecraftWeather(weatherService.getWeather().getWeatherName());
+						}
+					});
 				}
 			}
-		}.runTaskTimer(plugin, 0,20L*60);
+		}.runTaskTimerAsynchronously(plugin, 0,20L*120);
 	}
 
 	public void stop(){
