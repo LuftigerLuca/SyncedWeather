@@ -29,30 +29,43 @@ public class Weather {
     private double windSpeed;
     private double windDegree;
 
-    public Weather(SyncedWeather plugin){
+    public Weather(SyncedWeather plugin) {
         this.plugin = plugin;
         this.configService = plugin.getConfigService();
     }
 
-    public void update(){
-        Map<String, Object > respMap = new HashMap<>();
+    private static Map<String, Object> jsonToMap(String str) {
+        return new Gson().fromJson(str, new TypeToken<HashMap<String, Object>>() {
+        }.getType());
+    }
+
+    private static double round(double value) {
+
+        long factor = (long) Math.pow(10, 2);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+    public void update() {
+        Map<String, Object> respMap = new HashMap<>();
         String API_KEY = configService.getConfig().getString("API_KEY");
         String LOCATION = configService.getConfig().getString("Location");
         String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=imperial";
 
-        try{
+        try {
             StringBuilder result = new StringBuilder();
             URL url = new URL(urlString);
             URLConnection conn = url.openConnection();
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
-            while ((line = rd.readLine()) != null){
+            while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
-            rd.close();;
-            respMap = jsonToMap (result.toString());
+            rd.close();
+            respMap = jsonToMap(result.toString());
 
-        }catch (IOException e){
+        } catch (IOException e) {
             Bukkit.getLogger().warning("[SyncedWeather] There is an error with the request for the data:   §4" + e.getMessage().replace(" ", ""));
             return;
         }
@@ -61,8 +74,8 @@ public class Weather {
 
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-        this.tempF = round(Double.parseDouble(jsonToMap(respMap.get("main").toString()).get("temp").toString()), 2);
-        this.tempC = round(Math.rint((tempF - 32) * 5/9), 2);
+        this.tempF = round(Double.parseDouble(jsonToMap(respMap.get("main").toString()).get("temp").toString()));
+        this.tempC = round(Math.rint((tempF - 32) * 5 / 9));
 
         String rawInfo = respMap.get("weather").toString()
                 .replace("[", "")
@@ -77,75 +90,38 @@ public class Weather {
             weather.add(s.split("=")[1]);
         }
 
-        if(weather.size() < 1){
+        if (weather.size() < 1) {
             Bukkit.getLogger().warning("[SyncedWeather] The weather station you have selected is not compatible!");
         }
 
         weatherName = weather.get(1);
 
-        this.windSpeed = round(Math.rint(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("speed").toString())) * 3.6, 2);
-        this.windDegree = round(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("deg").toString()), 2);
+        this.windSpeed = round(Math.rint(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("speed").toString())) * 3.6);
+        this.windDegree = round(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("deg").toString()));
 
-    }
-
-    private static Map<String,Object> jsonToMap(String str){
-        return new Gson().fromJson(str, new TypeToken<HashMap<String,Object>>() {}.getType());
-    }
-
-    private static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
     }
 
     public String getLocationName() {
         return locationName;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
-
     public String getWeatherName() {
         return weatherName;
-    }
-
-    public void setWeatherName(String weatherName) {
-        this.weatherName = weatherName;
     }
 
     public double getTempF() {
         return tempF;
     }
 
-    public void setTempF(double tempF) {
-        this.tempF = tempF;
-    }
-
     public double getTempC() {
         return tempC;
-    }
-
-    public void setTempC(double tempC) {
-        this.tempC = tempC;
     }
 
     public double getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
     public double getWindDegree() {
         return windDegree;
-    }
-
-    public void setWindDegree(double windDegree) {
-        this.windDegree = windDegree;
     }
 }

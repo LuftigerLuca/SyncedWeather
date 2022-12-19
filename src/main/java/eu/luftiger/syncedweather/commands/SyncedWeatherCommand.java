@@ -13,14 +13,14 @@ public class SyncedWeatherCommand implements TabExecutor {
 
     private final SyncedWeather plugin;
 
-    public SyncedWeatherCommand(SyncedWeather plugin){
+    public SyncedWeatherCommand(SyncedWeather plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length >= 1){
-            switch (args[0].toLowerCase()){
+        if (args.length >= 1) {
+            switch (args[0].toLowerCase()) {
                 case "info":
                     new InfoSubcommand(plugin).execute(sender, args);
                     break;
@@ -33,7 +33,7 @@ public class SyncedWeatherCommand implements TabExecutor {
                 case "help":
                     new HelpSubcommand(plugin).execute(sender, args);
             }
-        }else {
+        } else {
             sender.sendMessage(plugin.getConfigService().getMessage("Messages.lenght_error", true));
         }
 
@@ -45,15 +45,15 @@ public class SyncedWeatherCommand implements TabExecutor {
         List<String> completions = new ArrayList<>();
         List<String> finalCompletions = new ArrayList<>();
 
-        if(args.length <= 1){
+        if (args.length <= 1) {
             completions.add("info");
             completions.add("currentWeather");
             completions.add("help");
 
-            if(sender instanceof Player){
+            if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                if(player.hasPermission("syncedweather.reload")) completions.add("reload");
+                if (player.hasPermission("syncedweather.reload")) completions.add("reload");
             }
         }
 

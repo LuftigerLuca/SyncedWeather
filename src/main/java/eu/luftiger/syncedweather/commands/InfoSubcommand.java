@@ -13,11 +13,11 @@ public class InfoSubcommand {
 
     private final SyncedWeather plugin;
 
-    public InfoSubcommand(SyncedWeather plugin){
+    public InfoSubcommand(SyncedWeather plugin) {
         this.plugin = plugin;
     }
 
-    public void execute(CommandSender sender, String[] args){
+    public void execute(CommandSender sender, String[] args) {
         PluginDescriptionFile descriptionFile = plugin.getDescription();
 
         sender.sendMessage("§8§m]§7§m------§8§m[§r §aPlugin - Info§r §8§m]§7§m------§8§m[");
@@ -26,7 +26,7 @@ public class InfoSubcommand {
         sender.sendMessage("§bAuthor§7» §f" + descriptionFile.getAuthors());
         sender.sendMessage(" ");
 
-        if(sender instanceof Player){
+        if (sender instanceof Player) {
             Player player = (Player) sender;
 
             TextComponent clickComponent = new TextComponent("§8[§6Spigot§8]");
@@ -34,7 +34,7 @@ public class InfoSubcommand {
             clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/syncedweather.97574/"));
 
             player.spigot().sendMessage(clickComponent);
-        }else {
+        } else {
             sender.sendMessage("https://www.spigotmc.org/resources/syncedweather.97574/");
         }
 

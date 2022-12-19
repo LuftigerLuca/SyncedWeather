@@ -10,27 +10,27 @@ public class ReloadSubcommand {
     private final SyncedWeather plugin;
     private final ConfigService configService;
 
-    public ReloadSubcommand(SyncedWeather plugin){
+    public ReloadSubcommand(SyncedWeather plugin) {
         this.plugin = plugin;
         this.configService = plugin.getConfigService();
     }
 
-    public void execute(CommandSender sender, String[] args){
-        if(sender instanceof Player){
+    public void execute(CommandSender sender, String[] args) {
+        if (sender instanceof Player) {
             Player player = (Player) sender;
-            if(player.hasPermission("syncedweather.reload")){
+            if (player.hasPermission("syncedweather.reload")) {
                 reload(sender);
-            }else {
+            } else {
                 player.sendMessage(configService.getMessage("Messages.permission_error", true));
             }
-        }else {
+        } else {
             reload(sender);
         }
     }
 
-    private void reload(CommandSender sender){
+    private void reload(CommandSender sender) {
         sender.sendMessage(configService.getMessage("Messages.reload_plugin", true));
         plugin.reload();
-        sender.sendMessage(configService.getMessage("Messages.reloaded_plugin",true));
+        sender.sendMessage(configService.getMessage("Messages.reloaded_plugin", true));
     }
 }

@@ -12,8 +12,8 @@ public class HelpSubcommand {
         this.plugin = plugin;
     }
 
-    public void execute(CommandSender sender, String[] args){
-        for (String line : plugin.getConfigService().getConfig().getStringList("Messages.help")){
+    public void execute(CommandSender sender, String[] args) {
+        for (String line : plugin.getConfigService().getConfig().getStringList("Messages.help")) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
         }
     }

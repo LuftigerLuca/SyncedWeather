@@ -1,137 +1,130 @@
 package eu.luftiger.syncedweather;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import eu.luftiger.syncedweather.commands.SyncedWeatherCommand;
 import eu.luftiger.syncedweather.listeners.PlayerJoinListener;
-import eu.luftiger.syncedweather.model.Weather;
 import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
 import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
-import eu.luftiger.syncedweather.utils.ConfigService;
-import eu.luftiger.syncedweather.utils.Placeholder;
-import eu.luftiger.syncedweather.utils.UpdateCheckService;
-import eu.luftiger.syncedweather.utils.WeatherService;
+import eu.luftiger.syncedweather.utils.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public final class SyncedWeather extends JavaPlugin {
 
-	private final Logger logger = Bukkit.getLogger();
-	private WeatherService weatherService;
-	private ConfigService configService;
-	private CheckUpTimeTask checkUpTimeTask;
-	private CheckUpWeatherTask checkUpWeatherTask;
+    private final Logger logger = getLogger();
+    private WeatherService weatherService;
+    private ConfigService configService;
+    private CheckUpTimeTask checkUpTimeTask;
+    private CheckUpWeatherTask checkUpWeatherTask;
+    private ProtocolManager protocolManager;
+    private ProtocolHandler protocolHandler;
+    private boolean isNewerVersion;
 
-	private String consolePrefix;
-	private final String consoleLogo =
-			"\n   _____                          ___          __        _   _                \n" +
-			"  / ____|                        | \\ \\        / /       | | | |               \n" +
-			" | (___  _   _ _ __   ___ ___  __| |\\ \\  /\\  / /__  __ _| |_| |__   ___ _ __  \n" +
-			"  \\___ \\| | | | '_ \\ / __/ _ \\/ _` | \\ \\/  \\/ / _ \\/ _` | __| '_ \\ / _ \\ '__| \n" +
-			"  ____) | |_| | | | | (_|  __/ (_| |  \\  /\\  /  __/ (_| | |_| | | |  __/ |    \n" +
-			" |_____/ \\__, |_| |_|\\___\\___|\\__,_|   \\/  \\/ \\___|\\__,_|\\__|_| |_|\\___|_|    \n" +
-			"          __/ |                                                               \n" +
-			"         |___/";
+    @Override
+    public void onEnable() {
 
-	private boolean isNewerVersion;
+        logger.info("enabling plugin...");
 
-	@Override
-	public void onEnable() {
-		logger.info(consoleLogo);
-		consolePrefix = "[" + this.getDescription().getPrefix() + "]";
+        logger.info("loading config...");
+        configService = new ConfigService(this);
+        configService.createDefaults("config.yml", true, true);
 
-		logger.info(consolePrefix + " enabling plugin...");
+        if (Objects.requireNonNull(configService.getConfig().getString("API_KEY")).isEmpty()) {
+            logger.warning("the api key is missing!!");
+            logger.info("disabling plugin...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
-		logger.info(consolePrefix + " loading config...");
-		configService = new ConfigService(this);
-		configService.createDefaults();
+        logger.info("loading weatherservice...");
+        this.weatherService = new WeatherService(this);
 
-		if(configService.getConfig().getString("API_KEY").isEmpty()){
-			logger.warning(consolePrefix + " the api key is missing!!");
-			logger.info(consolePrefix + " disabling plugin...");
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
+        logger.info("starting checkup-services...");
 
-		logger.info(consolePrefix + " loading weatherservice...");
-		this.weatherService = new WeatherService(this);
+        checkUpWeatherTask = new CheckUpWeatherTask(this);
+        if (configService.getConfig().getBoolean("SyncWeather")) {
+            checkUpWeatherTask.start();
+        }
 
-		logger.info(consolePrefix + " starting checkup-services...");
+        checkUpTimeTask = new CheckUpTimeTask(this);
+        if (configService.getConfig().getBoolean("SyncTime")) {
+            checkUpTimeTask.start();
+        }
 
-		checkUpWeatherTask = new CheckUpWeatherTask(this);
-		if(configService.getConfig().getBoolean("SyncWeather")){
-			checkUpWeatherTask.start();
-		}
+        logger.info("loading commands...");
+        getCommand("syncedweather").setExecutor(new SyncedWeatherCommand(this));
 
-		checkUpTimeTask = new CheckUpTimeTask(this);
-		if(configService.getConfig().getBoolean("SyncTime")) {
-			checkUpTimeTask.start();
-		}
+        logger.info("registering listeners...");
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new PlayerJoinListener(this), this);
 
-		logger.info(consolePrefix + " loading commands...");
-		getCommand("syncedweather").setExecutor(new SyncedWeatherCommand(this));
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            logger.info("loading placeholders...");
+            new Placeholder(this).register();
+        }
 
-		logger.info(consolePrefix + " registering listeners...");
-		PluginManager pluginManager = Bukkit.getPluginManager();
-		pluginManager.registerEvents(new PlayerJoinListener(this), this);
+        if (getServer().getPluginManager().getPlugin("ProtocolLib") != null) {
+            logger.info("loading ProtocolLib...");
+            protocolManager = ProtocolLibrary.getProtocolManager();
+            protocolHandler = new ProtocolHandler(this);
+        }
 
-		logger.info(consolePrefix + " checking for updates...");
+        new UpdateCheckService(this, 97574).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version)) {
+                isNewerVersion = true;
+                logger.info("There is a new version of this plugin: https://www.spigotmc.org/resources/syncedweather.97574/!");
+            }
+        });
 
-		new UpdateCheckService(this, 97574).getVersion(version -> {
-			if(!this.getDescription().getVersion().equals(version)){
-				isNewerVersion = true;
-				logger.info(consolePrefix + " there is a new version of this plugin: https://www.spigotmc.org/resources/syncedweather.97574/");
-			}
-		});
+        new Metrics(this, 13631);
+    }
 
+    public void reload() {
+        logger.info("loading the config...");
+        configService.createDefaults("config.yml", true, true);
 
-		if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null){
-			logger.info(consolePrefix + " loading placeholders...");
-			new Placeholder(this).register();
-		}
+        if (Objects.requireNonNull(configService.getConfig().getString("API_KEY")).isEmpty()) {
+            logger.warning("the api key is missing!!");
+            logger.info("disabling plugin...");
+            getServer().getPluginManager().disablePlugin(this);
+        }
 
-		Metrics metrics = new Metrics(this, 	13631);
-	}
+        logger.info("loading the weather...");
+        weatherService.getWeather().update();
 
-	public void reload(){
-		logger.info(consolePrefix + " loading the config...");
-		configService.createDefaults();
+        logger.info("loading checkup-services...");
+        if (configService.getConfig().getBoolean("SyncWeather")) {
+            checkUpWeatherTask.start();
+        } else checkUpWeatherTask.stop();
 
-		if(configService.getConfig().getString("API_KEY").isEmpty()){
-			logger.warning(consolePrefix + " the api key is missing!!");
-			logger.info(consolePrefix + " disabling plugin...");
-			getServer().getPluginManager().disablePlugin(this);
-		}
+        if (configService.getConfig().getBoolean("SyncTime")) {
+            checkUpTimeTask.start();
+        } else checkUpTimeTask.stop();
+    }
 
-		logger.info(consolePrefix + " loading the weather...");
-		weatherService.getWeather().update();
+    public WeatherService getWeatherService() {
+        return weatherService;
+    }
 
-		logger.info(consolePrefix + " loading checkup-services...");
-		if(configService.getConfig().getBoolean("SyncWeather")){
-			checkUpWeatherTask.start();
-		}else checkUpWeatherTask.stop();
+    public ConfigService getConfigService() {
+        return configService;
+    }
 
-		if(configService.getConfig().getBoolean("SyncTime")){
-			checkUpTimeTask.start();
-		}else checkUpTimeTask.stop();
-	}
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
+    }
 
-	public WeatherService getWeatherService() {
-		return weatherService;
-	}
+    public ProtocolHandler getProtocolHandler() {
+        return protocolHandler;
+    }
 
-	public ConfigService getConfigService() {
-		return configService;
-	}
-
-	public String getConsolePrefix() {
-		return consolePrefix;
-	}
-
-	public boolean isNewerVersion() {
-		return isNewerVersion;
-	}
+    public boolean isNewerVersion() {
+        return isNewerVersion;
+    }
 }
