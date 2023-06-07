@@ -4,6 +4,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import eu.luftiger.syncedweather.SyncedWeather;
 import eu.luftiger.syncedweather.utils.ConfigService;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
@@ -12,11 +13,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Getter
 public class Weather {
 
     private final SyncedWeather plugin;
@@ -28,6 +27,9 @@ public class Weather {
     private double tempC;
     private double windSpeed;
     private double windDegree;
+    private Date sunrise;
+    private Date sunset;
+
 
     public Weather(SyncedWeather plugin) {
         this.plugin = plugin;
@@ -66,7 +68,7 @@ public class Weather {
             respMap = jsonToMap(result.toString());
 
         } catch (IOException e) {
-            Bukkit.getLogger().warning("[SyncedWeather] There is an error with the request for the data:   §4" + e.getMessage().replace(" ", ""));
+            Bukkit.getLogger().warning("[SyncedWeather] There is an error with the request for the data: §4" + e.getMessage().replace(" ", ""));
             return;
         }
 
@@ -98,30 +100,5 @@ public class Weather {
 
         this.windSpeed = round(Math.rint(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("speed").toString())) * 3.6);
         this.windDegree = round(Double.parseDouble(jsonToMap(respMap.get("wind").toString()).get("deg").toString()));
-
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
-    public String getWeatherName() {
-        return weatherName;
-    }
-
-    public double getTempF() {
-        return tempF;
-    }
-
-    public double getTempC() {
-        return tempC;
-    }
-
-    public double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public double getWindDegree() {
-        return windDegree;
     }
 }

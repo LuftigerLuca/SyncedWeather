@@ -15,7 +15,7 @@ public class PlayerJoinListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (player.hasPermission("syncedweather.updateinfo") || player.isOp()) {
             if (plugin.isNewerVersion()) {

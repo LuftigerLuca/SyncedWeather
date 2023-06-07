@@ -4,8 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import eu.luftiger.syncedweather.commands.SyncedWeatherCommand;
 import eu.luftiger.syncedweather.listeners.PlayerJoinListener;
-import eu.luftiger.syncedweather.scheduler.CheckUpTimeTask;
-import eu.luftiger.syncedweather.scheduler.CheckUpWeatherTask;
+import eu.luftiger.syncedweather.scheduler.CheckUpTask;
 import eu.luftiger.syncedweather.utils.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -15,13 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+
 public final class SyncedWeather extends JavaPlugin {
 
     private final Logger logger = getLogger();
     private WeatherService weatherService;
     private ConfigService configService;
-    private CheckUpTimeTask checkUpTimeTask;
-    private CheckUpWeatherTask checkUpWeatherTask;
+    private CheckUpTask checkUpTask;
     private ProtocolManager protocolManager;
     private ProtocolHandler protocolHandler;
     private boolean isNewerVersion;
@@ -46,15 +45,9 @@ public final class SyncedWeather extends JavaPlugin {
         this.weatherService = new WeatherService(this);
 
         logger.info("starting checkup-services...");
-
-        checkUpWeatherTask = new CheckUpWeatherTask(this);
-        if (configService.getConfig().getBoolean("SyncWeather")) {
-            checkUpWeatherTask.start();
-        }
-
-        checkUpTimeTask = new CheckUpTimeTask(this);
-        if (configService.getConfig().getBoolean("SyncTime")) {
-            checkUpTimeTask.start();
+        checkUpTask = new CheckUpTask(this);
+        if (configService.getConfig().getBoolean("SyncTime") && configService.getConfig().getBoolean("SyncWeather")) {
+            checkUpTask.start();
         }
 
         logger.info("loading commands...");
@@ -99,13 +92,10 @@ public final class SyncedWeather extends JavaPlugin {
         weatherService.getWeather().update();
 
         logger.info("loading checkup-services...");
-        if (configService.getConfig().getBoolean("SyncWeather")) {
-            checkUpWeatherTask.start();
-        } else checkUpWeatherTask.stop();
 
-        if (configService.getConfig().getBoolean("SyncTime")) {
-            checkUpTimeTask.start();
-        } else checkUpTimeTask.stop();
+        if (configService.getConfig().getBoolean("SyncTime") && configService.getConfig().getBoolean("SyncWeather")) {
+            checkUpTask.start();
+        } else checkUpTask.stop();
     }
 
     public WeatherService getWeatherService() {

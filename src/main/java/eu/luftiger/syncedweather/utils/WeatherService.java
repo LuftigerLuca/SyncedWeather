@@ -8,13 +8,11 @@ import org.bukkit.World;
 
 public class WeatherService {
 
-    private final SyncedWeather plugin;
     private final ConfigService configService;
     private final ProtocolHandler protocolHandler;
     private final Weather weather;
 
     public WeatherService(SyncedWeather plugin) {
-        this.plugin = plugin;
         this.configService = plugin.getConfigService();
         this.protocolHandler = plugin.getProtocolHandler();
         this.weather = new Weather(plugin);
