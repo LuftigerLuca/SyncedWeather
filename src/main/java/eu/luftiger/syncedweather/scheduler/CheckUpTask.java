@@ -25,7 +25,7 @@ public class CheckUpTask {
     }
 
     public void start() {
-        DateTimeZone timeZone = DateTimeZone.forID(configService.getConfig().getString("TimeZone"));
+        DateTimeZone timeZone = DateTimeZone.forID(configService.getConfig().getString("TimeZone").trim());
 
         runnable = new BukkitRunnable() {
             int cycle = 0;
