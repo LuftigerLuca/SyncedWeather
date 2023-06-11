@@ -14,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-
 public final class SyncedWeather extends JavaPlugin {
 
     private final Logger logger = getLogger();

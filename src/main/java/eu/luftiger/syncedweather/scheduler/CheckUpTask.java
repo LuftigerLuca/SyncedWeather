@@ -60,7 +60,6 @@ public class CheckUpTask {
                             Bukkit.getScheduler().runTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    System.out.println("Setting weather to " + weatherService.getWeather().getWeatherName());
                                     weatherService.setMinecraftWeather(weatherService.getWeather().getWeatherName());
                                 }
                             });

@@ -32,6 +32,10 @@ public class SyncedWeatherCommand implements TabExecutor {
                     break;
                 case "help":
                     new HelpSubcommand(plugin).execute(sender, args);
+                    break;
+                default:
+                    sender.sendMessage(plugin.getConfigService().getMessage("Messages.lenght_error", true));
+                    break;
             }
         } else {
             sender.sendMessage(plugin.getConfigService().getMessage("Messages.lenght_error", true));
