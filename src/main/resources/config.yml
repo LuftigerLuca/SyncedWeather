@@ -25,14 +25,14 @@ Messages:
   help:
     - "&8&m]&7&m------&8&m[&r &aSyncedWeather - Help&r &8&m]&7&m------&8&m["
     - "&b/sw help&7» &fshows you this message"
-    - "&b/sw info&7» &fshwos you a short info about this plugin"
+    - "&b/sw info&7» &fshows you a short info about this plugin"
     - "&b/sw currentweather&7» &fshows you the current weather"
     - "&8&m]&7&m------&8&m[&r &aSyncedWeather - Help&r &8&m]&7&m------&8&m["
 
   info_map:
     unknown: "&8unknown"
     weathernames:
-      thundersorm: "Thunderstorm"
+      thunderstorm: "Thunderstorm"
       clouds: "Cloudy"
       drizzle: "Drizzle"
       rain: "Rain"

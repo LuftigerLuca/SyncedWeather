@@ -27,7 +27,6 @@ public final class SyncedWeather extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        logger.info("enabling plugin...");
 
         logger.info("loading config...");
         configService = new ConfigService(this);
